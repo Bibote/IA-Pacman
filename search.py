@@ -103,10 +103,25 @@ def breadthFirstSearch(problem):
             for hijo, accion_hijo, coste in problem.getSuccessors(nodo):
                 cola.push((hijo, accion + [accion_hijo]))
 
+def myFunc(e):
+  return e[-1]
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    visitados = []
+    lista = []
+    lista.append((problem.getStartState(), [],0))
+    while not len(lista)==0:
+        nodo, accion, coste = lista.pop()
+        if nodo not in visitados:  
+            visitados.append(nodo)
+            if problem.isGoalState(nodo):
+                return accion
+            for hijo, accion_hijo, coste_hijo in problem.getSuccessors(nodo):
+                lista.append((hijo, accion+[accion_hijo],coste+coste_hijo))
+            lista.sort(reverse=True,key=myFunc)
+
+                
 
 def nullHeuristic(state, problem=None):
     """
